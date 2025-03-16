@@ -1,89 +1,104 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // Ana Marka Renkleri
-  static const Color primaryColor = Color(0xFF7747FF); // Mor rengi daha cazip hale getirildi
-  static const Color secondaryColor = Color(0xFF00D0B3); // Turkuaz tonu daha canlı
-  static const Color accentColor = Color(0xFFFF4785); // Pembe aksent rengi eklendi
-  static const Color tertiaryColor = Color(0xFFFFC857); // Altın/Sarı renk
-  static const Color errorColor = Color(0xFFFF4B55); // Daha parlak hata rengi
+  // Primary Brand Colors
+  static const Color primaryColor = Color(0xFF6C5CE7); // Rich purple
+  static const Color secondaryColor = Color(0xFF00D2D3); // Bright teal
+  static const Color accentColor = Color(0xFFFD79A8); // Soft pink
+  static const Color tertiaryColor = Color(0xFFFDCB6E); // Warm yellow
 
-  // Arkaplan Renkleri
-  static const Color lightBackground = Color(0xFFF8F9FC); // Çok açık mavi tonlu beyaz
-  static const Color darkBackground = Color(0xFF0F1225); // Koyu lacivert
+  // Semantic Colors
+  static const Color errorColor = Color(0xFFFF4757); // Bright red for errors
+  static const Color warningColor = Color(0xFFFF9F43); // Orange for warnings
+  static const Color successColor = Color(0xFF2ED573); // Green for success
+  static const Color infoColor = Color(0xFF54A0FF); // Blue for information
 
-  // Yüzey Renkleri
+  // Background Colors
+  static const Color lightBackground = Color(0xFFF9FAFF); // Slightly blue-tinted white
+  static const Color darkBackground = Color(0xFF10151E); // Deep blue-black
+
+  // Surface Colors - Cards, dialogs, etc.
   static const Color lightSurface = Color(0xFFFFFFFF);
-  static const Color darkSurface = Color(0xFF1A1F35); // Daha mavi tonlu koyu renk
-  static const Color lightSurfaceVariant = Color(0xFFF0F3FA); // Açık yüzey varyantı
-  static const Color darkSurfaceVariant = Color(0xFF252A40); // Koyu yüzey varyantı
+  static const Color darkSurface = Color(0xFF1E2635); // Slightly lighter than background
+  static const Color lightSurfaceVariant = Color(0xFFF0F4FF); // Light blue-tinted
+  static const Color darkSurfaceVariant = Color(0xFF2A3142); // Medium blue-gray
 
-  // Metin Renkleri
-  static const Color lightTextColor = Color(0xFF151730); // Koyu lacivert metin
-  static const Color darkTextColor = Color(0xFFF0F3FA); // Açık mavi tonlu beyaz metin
-  static const Color lightTextSecondary = Color(0xFF6C7A93); // İkincil metin rengi
-  static const Color darkTextSecondary = Color(0xFFADB5C5); // Koyu temada ikincil metin
+  // Text Colors
+  static const Color lightTextColor = Color(0xFF1E293B); // Dark slate
+  static const Color darkTextColor = Color(0xFFF8FAFC); // Off-white
+  static const Color lightTextSecondary = Color(0xFF64748B); // Medium slate
+  static const Color darkTextSecondary = Color(0xFFB0B6C6); // Light gray-blue
 
-  // Ayırıcı Renkleri
-  static const Color lightDividerColor = Color(0xFFE0E5ED);
-  static const Color darkDividerColor = Color(0xFF353A50);
+  // Divider Colors
+  static const Color lightDividerColor = Color(0xFFE2E8F0);
+  static const Color darkDividerColor = Color(0xFF334155);
 
-  // Derecelendirme Renkleri
-  static const Color ratingColor = Color(0xFFFFCE54);
+  // Special Colors
+  static const Color ratingColor = Color(0xFFFFD700); // Gold for ratings
+  static const Color tokenColor = Color(0xFFFFBF00); // Token gold
+  static const Color tokenSecondaryColor = Color(0xFFFF9500); // Darker gold
 
-  // Token Renkleri
-  static const Color tokenColor = Color(0xFFFFD233); // Daha parlak altın tonu
-  static const Color tokenSecondaryColor = Color(0xFFF5A623); // Turuncu altın tonu
-
-  // Durum Renkleri
-  static const Color successColor = Color(0xFF44D58C); // Başarı yeşili
-  static const Color warningColor = Color(0xFFFFBB33); // Uyarı sarısı
-  static const Color infoColor = Color(0xFF33AAFF); // Bilgi mavisi
-
-  // Gradyan Renkleri
+  // Gradients
   static const List<Color> primaryGradient = [
-    Color(0xFF7747FF), // Mor
-    Color(0xFF9C6FFF), // Açık mor
+    Color(0xFF6C5CE7), // Primary purple
+    Color(0xFF8E75FD), // Lighter purple
+  ];
+
+  static const List<Color> secondaryGradient = [
+    Color(0xFF00D2D3), // Teal
+    Color(0xFF1AD6B8), // Blue-green
   ];
 
   static const List<Color> accentGradient = [
-    Color(0xFFFF4785), // Pembe
-    Color(0xFFFF80AB), // Açık pembe
+    Color(0xFFFD79A8), // Pink
+    Color(0xFFFF98BC), // Lighter pink
   ];
 
   static const List<Color> tokenGradient = [
-    Color(0xFFFFD233), // Altın
-    Color(0xFFF5A623), // Turuncu altın
+    Color(0xFFFFBF00), // Gold
+    Color(0xFFFF9500), // Amber
   ];
 
+  static const List<Color> successGradient = [
+    Color(0xFF2ED573), // Green
+    Color(0xFF7BED9F), // Lighter green
+  ];
+
+  static const List<Color> errorGradient = [
+    Color(0xFFFF4757), // Red
+    Color(0xFFFF6B81), // Lighter red
+  ];
+
+  // Overlay/Fade gradients
   static const List<Color> posterGradient = [
-    Color(0x00151730),
-    Color(0xE6151730),
+    Color(0x00000000), // Transparent
+    Color(0xCC000000), // 80% black
   ];
 
   static const List<Color> featuredGradient = [
-    Color(0xFF7747FF), // Mor
-    Color(0xFF00D0B3), // Turkuaz
+    Color(0x006C5CE7), // Transparent purple
+    Color(0xCC6C5CE7), // 80% purple
   ];
 
-  // Shimmer Renkleri
-  static const Color shimmerBaseColor = Color(0xFFE0E5ED);
-  static const Color shimmerHighlightColor = Color(0xFFF8F9FC);
-  static const Color darkShimmerBaseColor = Color(0xFF252A40);
-  static const Color darkShimmerHighlightColor = Color(0xFF353A50);
+  // Shimmer Colors
+  static const Color shimmerBaseColor = Color(0xFFE2E8F0);
+  static const Color shimmerHighlightColor = Color(0xFFF8FAFC);
+  static const Color darkShimmerBaseColor = Color(0xFF2A3142);
+  static const Color darkShimmerHighlightColor = Color(0xFF3A4155);
 
-  // Kart Renkleri
-  static const List<Color> cardGradient1 = [Color(0xFF7747FF), Color(0xFF9C6FFF)];
-  static const List<Color> cardGradient2 = [Color(0xFF00D0B3), Color(0xFF6AECDA)];
-  static const List<Color> cardGradient3 = [Color(0xFFFF4785), Color(0xFFFF80AB)];
-  static const List<Color> cardGradient4 = [Color(0xFFFFC857), Color(0xFFFFD98B)];
+  // Card Gradients
+  static const List<Color> cardGradient1 = [Color(0xFF6C5CE7), Color(0xFF8E75FD)];
+  static const List<Color> cardGradient2 = [Color(0xFF00D2D3), Color(0xFF1AD6B8)];
+  static const List<Color> cardGradient3 = [Color(0xFFFD79A8), Color(0xFFFF98BC)];
+  static const List<Color> cardGradient4 = [Color(0xFFFDCB6E), Color(0xFFFFDA8A)];
 
-  // Çeşitli renk paletleri
+  // Color Palette for charts or visualization
   static const List<Color> colorPalette = [
-    Color(0xFF7747FF), // Mor
-    Color(0xFF00D0B3), // Turkuaz
-    Color(0xFFFF4785), // Pembe
-    Color(0xFFFFC857), // Altın
-    Color(0xFF44D58C), // Yeşil
+    Color(0xFF6C5CE7), // Purple
+    Color(0xFF00D2D3), // Teal
+    Color(0xFFFD79A8), // Pink
+    Color(0xFFFDCB6E), // Yellow
+    Color(0xFF54A0FF), // Blue
+    Color(0xFF2ED573), // Green
   ];
 }

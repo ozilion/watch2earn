@@ -10,26 +10,26 @@ class AppTheme {
       brightness: Brightness.light,
       useMaterial3: true,
 
-      // Renk şeması
+      // Color scheme
       colorScheme: const ColorScheme.light(
         primary: AppColors.primaryColor,
         onPrimary: Colors.white,
         primaryContainer: Color(0xFFECE5FF),
-        onPrimaryContainer: Color(0xFF351C85),
+        onPrimaryContainer: Color(0xFF3C3175),
 
         secondary: AppColors.secondaryColor,
         onSecondary: Colors.white,
-        secondaryContainer: Color(0xFFD9F7F0),
-        onSecondaryContainer: Color(0xFF004D40),
+        secondaryContainer: Color(0xFFDCFBFB),
+        onSecondaryContainer: Color(0xFF00565E),
 
         tertiary: AppColors.accentColor,
         onTertiary: Colors.white,
-        tertiaryContainer: Color(0xFFFFEAF1),
-        onTertiaryContainer: Color(0xFF8C0037),
+        tertiaryContainer: Color(0xFFFFEDF2),
+        onTertiaryContainer: Color(0xFF8C103F),
 
         error: AppColors.errorColor,
         onError: Colors.white,
-        errorContainer: Color(0xFFFFDAD7),
+        errorContainer: Color(0xFFFFE1E6),
         onErrorContainer: Color(0xFF7F1D25),
 
         background: AppColors.lightBackground,
@@ -41,15 +41,15 @@ class AppTheme {
         surfaceVariant: AppColors.lightSurfaceVariant,
         onSurfaceVariant: AppColors.lightTextSecondary,
 
-        outline: Color(0xFFDBE0EC),
+        outline: Color(0xFFCBD5E1),
         shadow: Color(0x29000000),
       ),
 
-      // Diğer temel renkler
+      // Base colors
       scaffoldBackgroundColor: AppColors.lightBackground,
       primaryColor: AppColors.primaryColor,
 
-      // StatusBar stili
+      // AppBar theme
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.lightSurface,
         foregroundColor: AppColors.lightTextColor,
@@ -62,12 +62,10 @@ class AppTheme {
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
         titleTextStyle: AppTextStyles.titleMedium,
-        scrolledUnderElevation: 4,
         shadowColor: Color(0x20000000),
-        toolbarHeight: 60,
       ),
 
-      // Kart teması
+      // Card theme
       cardTheme: CardTheme(
         color: AppColors.lightSurface,
         elevation: 2,
@@ -79,13 +77,13 @@ class AppTheme {
         clipBehavior: Clip.antiAlias,
       ),
 
-      // Elevated buton teması
+      // Button themes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: AppColors.primaryColor,
           textStyle: AppTextStyles.buttonText,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           elevation: 2,
           shadowColor: const Color(0x40000000),
           shape: RoundedRectangleBorder(
@@ -95,7 +93,6 @@ class AppTheme {
         ),
       ),
 
-      // Text buton teması
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: AppColors.primaryColor,
@@ -107,20 +104,19 @@ class AppTheme {
         ),
       ),
 
-      // Outlined buton teması
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: AppColors.primaryColor,
           side: const BorderSide(color: AppColors.primaryColor, width: 1.5),
           textStyle: AppTextStyles.buttonText,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
       ),
 
-      // Input dekorasyon teması
+      // Input decoration theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.lightSurfaceVariant,
@@ -152,18 +148,18 @@ class AppTheme {
         suffixIconColor: AppColors.lightTextSecondary,
       ),
 
-      // Bottom navigation teması
+      // Bottom navigation theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.lightSurface,
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.lightTextSecondary,
         type: BottomNavigationBarType.fixed,
-        elevation: 12,
+        elevation: 8,
         selectedLabelStyle: AppTextStyles.caption,
         unselectedLabelStyle: AppTextStyles.caption,
         showUnselectedLabels: true,
-        selectedIconTheme: IconThemeData(size: 26),
-        unselectedIconTheme: IconThemeData(size: 26),
+        selectedIconTheme: IconThemeData(size: 24),
+        unselectedIconTheme: IconThemeData(size: 24),
       ),
 
       // TabBar teması
@@ -299,27 +295,27 @@ class AppTheme {
       brightness: Brightness.dark,
       useMaterial3: true,
 
-      // Renk şeması
+      // Color scheme
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primaryColor,
         onPrimary: Colors.white,
-        primaryContainer: Color(0xFF473377),
+        primaryContainer: Color(0xFF483D99),
         onPrimaryContainer: Color(0xFFECE5FF),
 
         secondary: AppColors.secondaryColor,
         onSecondary: Colors.white,
-        secondaryContainer: Color(0xFF004D40),
-        onSecondaryContainer: Color(0xFFD9F7F0),
+        secondaryContainer: Color(0xFF007A80),
+        onSecondaryContainer: Color(0xFFDCFBFB),
 
         tertiary: AppColors.accentColor,
         onTertiary: Colors.white,
-        tertiaryContainer: Color(0xFF7D0031),
-        onTertiaryContainer: Color(0xFFFFEAF1),
+        tertiaryContainer: Color(0xFF9E3060),
+        onTertiaryContainer: Color(0xFFFFEDF2),
 
         error: AppColors.errorColor,
         onError: Colors.white,
         errorContainer: Color(0xFF7F1D25),
-        onErrorContainer: Color(0xFFFFDAD7),
+        onErrorContainer: Color(0xFFFFE1E6),
 
         background: AppColors.darkBackground,
         onBackground: AppColors.darkTextColor,
@@ -330,15 +326,15 @@ class AppTheme {
         surfaceVariant: AppColors.darkSurfaceVariant,
         onSurfaceVariant: AppColors.darkTextSecondary,
 
-        outline: Color(0xFF454D65),
+        outline: Color(0xFF475569),
         shadow: Color(0x29000000),
       ),
 
-      // Diğer temel renkler
+      // Base colors
       scaffoldBackgroundColor: AppColors.darkBackground,
       primaryColor: AppColors.primaryColor,
 
-      // StatusBar stili
+      // AppBar theme
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.darkSurface,
         foregroundColor: AppColors.darkTextColor,
@@ -351,12 +347,10 @@ class AppTheme {
           systemNavigationBarIconBrightness: Brightness.light,
         ),
         titleTextStyle: AppTextStyles.titleMedium,
-        scrolledUnderElevation: 4,
         shadowColor: Color(0x40000000),
-        toolbarHeight: 60,
       ),
 
-      // Kart teması
+      // Card theme
       cardTheme: CardTheme(
         color: AppColors.darkSurface,
         elevation: 2,
@@ -368,13 +362,13 @@ class AppTheme {
         clipBehavior: Clip.antiAlias,
       ),
 
-      // Elevated buton teması
+      // Button themes
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: AppColors.primaryColor,
           textStyle: AppTextStyles.buttonText,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           elevation: 2,
           shadowColor: const Color(0x60000000),
           shape: RoundedRectangleBorder(
@@ -384,32 +378,7 @@ class AppTheme {
         ),
       ),
 
-      // Text buton teması
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: AppColors.primaryColor,
-          textStyle: AppTextStyles.buttonText,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-
-      // Outlined buton teması
-      outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primaryColor,
-          side: const BorderSide(color: AppColors.primaryColor, width: 1.5),
-          textStyle: AppTextStyles.buttonText,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-
-      // Input dekorasyon teması
+      // Input decoration theme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkSurfaceVariant,
@@ -441,18 +410,18 @@ class AppTheme {
         suffixIconColor: AppColors.darkTextSecondary,
       ),
 
-      // Bottom navigation teması
+      // Bottom navigation theme
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.darkSurface,
         selectedItemColor: AppColors.primaryColor,
         unselectedItemColor: AppColors.darkTextSecondary,
         type: BottomNavigationBarType.fixed,
-        elevation: 12,
+        elevation: 8,
         selectedLabelStyle: AppTextStyles.caption,
         unselectedLabelStyle: AppTextStyles.caption,
         showUnselectedLabels: true,
-        selectedIconTheme: IconThemeData(size: 26),
-        unselectedIconTheme: IconThemeData(size: 26),
+        selectedIconTheme: IconThemeData(size: 24),
+        unselectedIconTheme: IconThemeData(size: 24),
       ),
 
       // TabBar teması
