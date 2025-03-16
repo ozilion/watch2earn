@@ -1,4 +1,3 @@
-// lib/features/movies/widgets/movie_card.dart
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -71,11 +70,16 @@ class MovieCard extends StatelessWidget {
                   right: 0,
                   child: Container(
                     height: calculatedHeight * 0.4,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: AppColors.posterGradient,
+                        colors: [
+                          Colors.transparent,
+                          Colors.black54,
+                          Colors.black87,
+                        ],
+                        stops: [0.0, 0.7, 1.0],
                       ),
                     ),
                   ),
@@ -101,6 +105,13 @@ class MovieCard extends StatelessWidget {
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
+                            shadows: [
+                              const Shadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 3.0,
+                                color: Colors.black54,
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -114,6 +125,13 @@ class MovieCard extends StatelessWidget {
                                 movie.year,
                                 style: AppTextStyles.caption.copyWith(
                                   color: Colors.white.withOpacity(0.9),
+                                  shadows: [
+                                    const Shadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 2.0,
+                                      color: Colors.black54,
+                                    ),
+                                  ],
                                 ),
                               ),
                             if (showRating)
@@ -139,14 +157,22 @@ class MovieCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.6),
-                      borderRadius: BorderRadius.circular(4),
+                      color: AppColors.primaryColor.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
                     ),
                     child: Text(
                       movie.genres![0].name,
                       style: AppTextStyles.caption.copyWith(
                         color: Colors.white,
                         fontSize: 10,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -159,46 +185,7 @@ class MovieCard extends StatelessWidget {
   }
 
   Widget _buildPosterImage(BuildContext context) {
-    return movie.posterPath != null
-        ? CachedNetworkImage(
-      imageUrl: movie.posterUrl,
-      fit: BoxFit.cover,
-      placeholder: (context, url) => Container(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        child: const Center(
-          child: SizedBox(
-            width: 24,
-            height: 24,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
-          ),
-        ),
-      ),
-      errorWidget: (context, url, error) => Container(
-        color: Theme.of(context).colorScheme.surfaceVariant,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.movie, size: 32),
-            const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                movie.title,
-                textAlign: TextAlign.center,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    )
-        : Container(
+    final placeholder = Container(
       color: Theme.of(context).colorScheme.surfaceVariant,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -220,6 +207,26 @@ class MovieCard extends StatelessWidget {
         ],
       ),
     );
+
+    return movie.posterPath != null
+        ? CachedNetworkImage(
+      imageUrl: movie.posterUrl,
+      fit: BoxFit.cover,
+      placeholder: (context, url) => Container(
+        color: Theme.of(context).colorScheme.surfaceVariant,
+        child: const Center(
+          child: SizedBox(
+            width: 24,
+            height: 24,
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          ),
+        ),
+      ),
+      errorWidget: (context, url, error) => placeholder,
+    )
+        : placeholder;
   }
 
   void _navigateToMovieDetail(BuildContext context) {

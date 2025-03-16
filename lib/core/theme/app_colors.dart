@@ -101,4 +101,25 @@ class AppColors {
     Color(0xFF54A0FF), // Blue
     Color(0xFF2ED573), // Green
   ];
+
+  // New Neumorphic Colors
+  static const Color lightNeumorphicBase = Color(0xFFF0F4F8);
+  static const Color darkNeumorphicBase = Color(0xFF1A202C);
+
+  // Material 3 inspired palette
+  static const MaterialColor primarySwatch = MaterialColor(
+    0xFF6C5CE7,
+    <int, Color>{
+      50: Color(0xFFEEECFD),
+      100: Color(0xFFD4CFFA),
+      200: Color(0xFFB7B0F7),
+      300: Color(0xFF9A90F4),
+      400: Color(0xFF8377F1),
+      500: Color(0xFF6C5CE7),
+      600: Color(0xFF6454E4),
+      700: Color(0xFF594AE0),
+      800: Color(0xFF5041DD),
+      900: Color(0xFF3F30D7),
+    },
+  );
 }

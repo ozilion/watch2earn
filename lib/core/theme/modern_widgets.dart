@@ -73,6 +73,7 @@ class GlassContainer extends StatelessWidget {
   final double? width;
   final double? height;
   final Border? border;
+  final List<BoxShadow>? boxShadow;
 
   const GlassContainer({
     Key? key,
@@ -86,6 +87,7 @@ class GlassContainer extends StatelessWidget {
     this.width,
     this.height,
     this.border,
+    this.boxShadow,
   }) : super(key: key);
 
   @override
@@ -107,7 +109,7 @@ class GlassContainer extends StatelessWidget {
               borderRadius: BorderRadius.circular(borderRadius),
               border: border,
               color: color.withOpacity(opacity),
-              boxShadow: [
+              boxShadow: boxShadow ?? [
                 BoxShadow(
                   color: color.withOpacity(opacity / 2),
                   blurRadius: blur,
@@ -153,9 +155,9 @@ class AnimatedCounter extends StatelessWidget {
       tween: Tween<double>(begin: 0, end: value),
       duration: duration,
       curve: curve,
-      builder: (context, value, child) {
+      builder: (context, animatedValue, child) {
         return Text(
-          '$prefix${value.toStringAsFixed(precision)}$suffix',
+          '$prefix${animatedValue.toStringAsFixed(precision)}$suffix',
           style: effectiveStyle,
         );
       },
@@ -251,8 +253,7 @@ class ShimmerLoading extends StatelessWidget {
     final effectiveBaseColor = baseColor ??
         (isDark ? AppColors.darkShimmerBaseColor : AppColors.shimmerBaseColor);
     final effectiveHighlightColor = highlightColor ??
-        (isDark ? AppColors.darkShimmerHighlightColor : AppColors
-            .shimmerHighlightColor);
+        (isDark ? AppColors.darkShimmerHighlightColor : AppColors.shimmerHighlightColor);
 
     if (!isLoading) {
       return child;
@@ -296,8 +297,7 @@ class _ShimmerEffectState extends State<ShimmerEffect>
     _controller = AnimationController(
       vsync: this,
       duration: widget.duration,
-    )
-      ..repeat(reverse: false);
+    )..repeat(reverse: false);
 
     _animation = Tween<double>(begin: -1.0, end: 2.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOutSine),
@@ -635,160 +635,208 @@ class CustomProgressIndicator extends StatelessWidget {
       ),
     );
   }
-}})
-:
-super
-(
-key: key);
-
-@override
-Widget build(BuildContext context) {
-return AnimatedContainer(
-duration: const Duration(milliseconds: 300),
-width: width,
-height: height,
-margin: margin,
-padding: padding,
-decoration: BoxDecoration(
-gradient: LinearGradient(
-begin: begin,
-end: end,
-colors: colors,
-),
-borderRadius: shape == BoxShape.rectangle
-? BorderRadius.circular(borderRadius)
-    : null,
-shape: shape,
-border: border,
-boxShadow: boxShadow,
-),
-child: child,
-);
 }
+
+/// GradientButton - Button with gradient background
+class GradientButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final List<Color> colors;
+  final bool isLoading;
+  final double elevation;
+  final double? width;
+  final double? height;
+  final Widget? icon;
+  final double borderRadius;
+
+  const GradientButton({
+    Key? key,
+    required this.text,
+    this.onPressed,
+    this.colors = const [AppColors.primaryColor, Color(0xFF8E75FD)],
+    this.isLoading = false,
+    this.elevation = 2,
+    this.width,
+    this.height = 50,
+    this.icon,
+    this.borderRadius = 12,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: elevation,
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: InkWell(
+        onTap: isLoading ? null : onPressed,
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: Ink(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: onPressed == null ? [Colors.grey, Colors.grey.shade400] : colors,
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+            borderRadius: BorderRadius.circular(borderRadius),
+          ),
+          child: Center(
+            child: isLoading
+                ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            )
+                : Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (icon != null) ...[
+                  icon!,
+                  const SizedBox(width: 8),
+                ],
+                Text(
+                  text,
+                  style: AppTextStyles.buttonText.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// BounceCard - Card with bounce animation on tap
 class BounceCard extends StatefulWidget {
-final Widget child;
-final VoidCallback? onTap;
-final double borderRadius;
-final Color? color;
-final double elevation;
-final EdgeInsetsGeometry padding;
-final EdgeInsetsGeometry margin;
-final bool showBorder;
-final Color? borderColor;
-final List<Color>? gradientColors;
-final List<BoxShadow>? boxShadow;
+  final Widget child;
+  final VoidCallback? onTap;
+  final double borderRadius;
+  final Color? color;
+  final double elevation;
+  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry margin;
+  final bool showBorder;
+  final Color? borderColor;
+  final List<Color>? gradientColors;
+  final List<BoxShadow>? boxShadow;
 
-const BounceCard({
-Key? key,
-required this.child,
-this.onTap,
-this.borderRadius = 16,
-this.color,
-this.elevation = 2,
-this.padding = const EdgeInsets.all(16),
-this.margin = const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-this.showBorder = false,
-this.borderColor,
-this.gradientColors,
-this.boxShadow,
-}) : super(key: key);
+  const BounceCard({
+    Key? key,
+    required this.child,
+    this.onTap,
+    this.borderRadius = 16,
+    this.color,
+    this.elevation = 2,
+    this.padding = const EdgeInsets.all(16),
+    this.margin = const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+    this.showBorder = false,
+    this.borderColor,
+    this.gradientColors,
+    this.boxShadow,
+  }) : super(key: key);
 
-@override
-State<BounceCard> createState() => _BounceCardState();
+  @override
+  State<BounceCard> createState() => _BounceCardState();
 }
 
 class _BounceCardState extends State<BounceCard> with SingleTickerProviderStateMixin {
-late AnimationController _controller;
-late Animation<double> _scaleAnimation;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
 
-@override
-void initState() {
-super.initState();
-_controller = AnimationController(
-vsync: this,
-duration: const Duration(milliseconds: 150),
-);
-_scaleAnimation = Tween<double>(begin: 1.0, end: 0.97).animate(
-CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-);
-}
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.97).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
 
-@override
-void dispose() {
-_controller.dispose();
-super.dispose();
-}
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
-@override
-Widget build(BuildContext context) {
-final theme = Theme.of(context);
-final defaultShadow = [
-BoxShadow(
-color: (theme.colorScheme.shadow).withOpacity(0.1),
-blurRadius: widget.elevation * 3,
-offset: Offset(0, widget.elevation),
-),
-];
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final defaultShadow = [
+      BoxShadow(
+        color: (theme.colorScheme.shadow).withOpacity(0.1),
+        blurRadius: widget.elevation * 3,
+        offset: Offset(0, widget.elevation),
+      ),
+    ];
 
-final effectiveBoxShadow = widget.boxShadow ?? defaultShadow;
+    final effectiveBoxShadow = widget.boxShadow ?? defaultShadow;
 
-return GestureDetector(
-onTapDown: (_) {
-if (widget.onTap != null) {
-_controller.forward();
-}
-},
-onTapUp: (_) {
-if (widget.onTap != null) {
-_controller.reverse();
-widget.onTap!();
-}
-},
-onTapCancel: () {
-if (widget.onTap != null) {
-_controller.reverse();
-}
-},
-child: ScaleTransition(
-scale: _scaleAnimation,
-child: widget.gradientColors != null
-? GradientContainer(
-colors: widget.gradientColors!,
-borderRadius: widget.borderRadius,
-padding: widget.padding,
-margin: widget.margin,
-border: widget.showBorder
-? Border.all(
-color: widget.borderColor ?? theme.colorScheme.outline,
-width: 1.5,
-)
-    : null,
-boxShadow: effectiveBoxShadow,
-child: widget.child,
-)
-    : Card(
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(widget.borderRadius),
-side: widget.showBorder
-? BorderSide(
-color: widget.borderColor ?? theme.colorScheme.outline,
-width: 1.5,
-)
-    : BorderSide.none,
-),
-color: widget.color ?? theme.cardTheme.color,
-elevation: widget.elevation,
-margin: widget.margin,
-shadowColor: theme.colorScheme.shadow.withOpacity(0.3),
-child: Padding(
-padding: widget.padding,
-child: widget.child,
-),
-),
-),
-);
-}
+    return GestureDetector(
+      onTapDown: (_) {
+        if (widget.onTap != null) {
+          _controller.forward();
+        }
+      },
+      onTapUp: (_) {
+        if (widget.onTap != null) {
+          _controller.reverse();
+          widget.onTap!();
+        }
+      },
+      onTapCancel: () {
+        if (widget.onTap != null) {
+          _controller.reverse();
+        }
+      },
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: widget.gradientColors != null
+            ? GradientContainer(
+          colors: widget.gradientColors!,
+          borderRadius: widget.borderRadius,
+          padding: widget.padding,
+          margin: widget.margin,
+          border: widget.showBorder
+              ? Border.all(
+            color: widget.borderColor ?? theme.colorScheme.outline,
+            width: 1.5,
+          )
+              : null,
+          boxShadow: effectiveBoxShadow,
+          child: widget.child,
+        )
+            : Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+            side: widget.showBorder
+                ? BorderSide(
+              color: widget.borderColor ?? theme.colorScheme.outline,
+              width: 1.5,
+            )
+                : BorderSide.none,
+          ),
+          color: widget.color ?? theme.cardTheme.color,
+          elevation: widget.elevation,
+          margin: widget.margin,
+          shadowColor: theme.colorScheme.shadow.withOpacity(0.3),
+          child: Padding(
+            padding: widget.padding,
+            child: widget.child,
+          ),
+        ),
+      ),
+    );
+  }
 }

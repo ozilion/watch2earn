@@ -1,4 +1,3 @@
-// lib/features/auth/screens/login_screen.dart
 import 'dart:developer' as developer;
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,6 +9,7 @@ import 'package:watch2earn/core/theme/modern_widgets.dart';
 import 'package:watch2earn/core/theme/text_styles.dart';
 import 'package:watch2earn/core/utils/validators.dart';
 import 'package:watch2earn/features/auth/providers/auth_provider.dart';
+import 'package:watch2earn/features/auth/services/credentials_storage.dart';
 import 'package:watch2earn/features/auth/widgets/auth_button.dart';
 import 'package:watch2earn/features/auth/widgets/auth_text_field.dart';
 import 'package:watch2earn/shared/widgets/app_logo.dart';
@@ -62,7 +62,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
     // Check if we need to redirect to home on initial load
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkAuthStatus();
+      _loadSavedCredentials();
     });
+  }
+
+  // Load saved credentials and remember me preference
+  Future<void> _loadSavedCredentials() async {
+    try {
+      final credentialsStorage = ref.read(credentialsStorageProvider);
+
+      // Get the remember me preference
+      final rememberMe = await credentialsStorage.getRememberMePreference();
+
+      if (rememberMe) {
+        // If remember me was selected, get saved credentials
+        final savedCredentials = await credentialsStorage.getSavedCredentials();
+
+        if (savedCredentials != null) {
+          // Set email and password fields if credentials exist
+          setState(() {
+            _emailController.text = savedCredentials['email'] ?? '';
+            _passwordController.text = savedCredentials['password'] ?? '';
+            _rememberMe = true;
+          });
+
+          developer.log('Loaded saved credentials for ${_emailController.text}',
+              name: 'LoginScreen');
+        }
+      }
+    } catch (e) {
+      developer.log('Error loading saved credentials: $e',
+          name: 'LoginScreen', error: e);
+    }
   }
 
   void _checkAuthStatus() {
@@ -103,6 +134,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> with SingleTickerProv
       });
 
       try {
+        // Save credentials if remember me is checked
+        final credentialsStorage = ref.read(credentialsStorageProvider);
+        await credentialsStorage.saveCredentials(
+          email: _emailController.text.trim(),
+          password: _passwordController.text,
+          rememberMe: _rememberMe,
+        );
+
+        // Perform login
         await ref.read(authControllerProvider.notifier).login(
           _emailController.text.trim(),
           _passwordController.text,

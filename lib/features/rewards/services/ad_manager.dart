@@ -1,20 +1,39 @@
 // lib/features/rewards/services/ad_manager.dart
+import 'dart:async';
 import 'dart:developer' as developer;
 import 'dart:math' as math;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:watch2earn/core/theme/app_colors.dart';
+import 'package:watch2earn/core/theme/text_styles.dart';
 
 typedef RewardCallback = Function(double rewardAmount);
 
 class AdManager {
+  // Ad state tracking
   bool _isRewardedAdLoaded = false;
   bool _isInterstitialAdLoaded = false;
   bool _isBannerAdLoaded = false;
   bool _isLoading = false;
 
-  // Ad units tanımlarını güvenli bir şekilde al
+  // Timer for scheduled ads
+  Timer? _scheduledAdTimer;
+
+  // Stream controller for ad countdown
+  final _adCountdownController = BehaviorSubject<int>();
+  Stream<int> get adCountdown => _adCountdownController.stream;
+
+  // Constants for ad display frequency
+  static const int rewardedAdIntervalMinutes = 10; // How often to show rewarded ads
+  static const int interactionCountBeforeAd = 3; // Show ad after this many content interactions
+
+  // Track user interactions
+  int _itemInteractionCount = 0;
+
+  // Ad units defined safely
   final String _bannerAdUnitId = kDebugMode
       ? _getSafeAdUnitId('ADMOB_BANNER_ID_TEST', 'ca-app-pub-3940256099942544/6300978111')
       : _getSafeAdUnitId('ADMOB_BANNER_ID', '');
@@ -32,7 +51,9 @@ class AdManager {
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
 
-  // Dotenv'den güvenli şekilde ad unit ID'sini al
+  DateTime? _lastRewardedAdShown;
+
+  // Get ad unit ID safely
   static String _getSafeAdUnitId(String key, String defaultValue) {
     try {
       final value = dotenv.env[key];
@@ -49,17 +70,18 @@ class AdManager {
 
   AdManager() {
     _initializeAds();
+    _startScheduledAdTimer();
   }
 
-  // Reklamları başlat
+  // Initialize ads
   Future<void> _initializeAds() async {
     try {
       developer.log('MobileAds initialization başlatılıyor...', name: 'AdManager');
 
-      // SDK'nın durumunu kontrol et
+      // Initialize SDK
       final initStatus = await MobileAds.instance.initialize();
 
-      // SDK durumunu logla
+      // Log SDK status
       final statusMap = <String, String>{};
       initStatus.adapterStatuses.forEach((key, value) {
         statusMap[key] = '${value.state.name} - ${value.description}';
@@ -67,24 +89,24 @@ class AdManager {
 
       developer.log('AdMob başlatma durumu: $statusMap', name: 'AdManager');
 
-      // Test cihazları yapılandırması
+      // Configure test devices
       await MobileAds.instance.updateRequestConfiguration(
         RequestConfiguration(
           tagForChildDirectedTreatment: TagForChildDirectedTreatment.unspecified,
           testDeviceIds: [
-            'EMULATOR', // Emülatörler için
+            'EMULATOR', // For emulators
           ],
         ),
       );
 
       developer.log('Google Mobile Ads SDK başarıyla başlatıldı', name: 'AdManager');
 
-      // ID'leri logla
+      // Log ad unit IDs
       developer.log('Banner ad ID: $_bannerAdUnitId', name: 'AdManager');
       developer.log('Interstitial ad ID: $_interstitialAdUnitId', name: 'AdManager');
       developer.log('Rewarded ad ID: $_rewardedAdUnitId', name: 'AdManager');
 
-      // Reklamları yükle
+      // Load ads
       await loadRewardedAd();
       await loadInterstitialAd();
       await loadBannerAd();
@@ -122,7 +144,7 @@ class AdManager {
             _isLoading = false;
             developer.log('Ödüllü reklam yüklenirken hata: Kod: ${error.code}, Mesaj: ${error.message}, Domain: ${error.domain}', name: 'AdManager');
 
-            // Belirli bir süre sonra tekrar dene
+            // Retry after delay
             Future.delayed(const Duration(seconds: 30), () {
               loadRewardedAd();
             });
@@ -134,7 +156,7 @@ class AdManager {
       _isRewardedAdLoaded = false;
       _isLoading = false;
 
-      // Hatadan sonra tekrar dene
+      // Retry after error
       Future.delayed(const Duration(seconds: 30), () {
         loadRewardedAd();
       });
@@ -147,6 +169,7 @@ class AdManager {
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
       onAdShowedFullScreenContent: (RewardedAd ad) {
         developer.log('Ödüllü reklam tam ekran gösterildi', name: 'AdManager');
+        _lastRewardedAdShown = DateTime.now();
       },
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         developer.log('Ödüllü reklam kapatıldı', name: 'AdManager');
@@ -171,10 +194,10 @@ class AdManager {
       if (!_isRewardedAdLoaded || _rewardedAd == null) {
         developer.log('Ödüllü reklam gösterilemiyor, yükleme başarısız', name: 'AdManager');
 
-        // Reklam yüklenemediğinde benzetim modu - varsayılan ödül (sadece debug modunda)
+        // Simulation mode for failed ads (only in debug mode)
         if (kDebugMode) {
           developer.log('DEBUG MODU: Benzetim ödülü veriliyor', name: 'AdManager');
-          onRewarded(15.0); // Test için varsayılan ödül
+          onRewarded(15.0); // Default reward for testing
         }
         return;
       }
@@ -195,10 +218,10 @@ class AdManager {
       _isRewardedAdLoaded = false;
       loadRewardedAd();
 
-      // Hata durumunda benzetim modu - varsayılan ödül (sadece debug modunda)
+      // Simulation mode for errors (only in debug mode)
       if (kDebugMode) {
         developer.log('DEBUG MODU: Benzetim ödülü veriliyor (hata sonrası)', name: 'AdManager');
-        onRewarded(15.0); // Test için varsayılan ödül
+        onRewarded(15.0); // Default reward for testing
       }
     }
   }
@@ -232,7 +255,7 @@ class AdManager {
             _isLoading = false;
             developer.log('Geçiş reklamı yüklenirken hata: Kod: ${error.code}, Mesaj: ${error.message}', name: 'AdManager');
 
-            // Belirli bir süre sonra tekrar dene
+            // Retry after delay
             Future.delayed(const Duration(seconds: 30), () {
               loadInterstitialAd();
             });
@@ -244,7 +267,7 @@ class AdManager {
       _isInterstitialAdLoaded = false;
       _isLoading = false;
 
-      // Hatadan sonra tekrar dene
+      // Retry after error
       Future.delayed(const Duration(seconds: 30), () {
         loadInterstitialAd();
       });
@@ -321,7 +344,7 @@ class AdManager {
             _isLoading = false;
             developer.log('Banner reklam yüklenirken hata: $error', name: 'AdManager');
 
-            // Belirli bir süre sonra tekrar dene
+            // Retry after delay
             Future.delayed(const Duration(seconds: 30), () {
               loadBannerAd();
             });
@@ -341,7 +364,7 @@ class AdManager {
       _isBannerAdLoaded = false;
       _isLoading = false;
 
-      // Hatadan sonra tekrar dene
+      // Retry after error
       Future.delayed(const Duration(seconds: 30), () {
         loadBannerAd();
       });
@@ -351,13 +374,17 @@ class AdManager {
   // Get a widget representing the banner ad
   Widget getBannerAd() {
     if (!_isBannerAdLoaded || _bannerAd == null) {
-      developer.log('Banner reklam henüz yüklenmedi, yükleniyor...', name: 'AdManager');
-      loadBannerAd();
+      // Request loading if not ready
+      if (!_isLoading) {
+        loadBannerAd();
+      }
+
+      // Return placeholder
       return Container(
         height: 50,
-        color: Colors.grey[300],
+        color: Colors.transparent,
         child: const Center(
-          child: Text('Reklam yükleniyor...'),
+          child: Text('Advertisement', style: TextStyle(color: Colors.grey)),
         ),
       );
     }
@@ -370,72 +397,92 @@ class AdManager {
     );
   }
 
-  // Farklı banner boyutları için ek metodlar
-  Future<BannerAd?> loadBannerWithSize(AdSize adSize) async {
-    if (_isLoading) {
-      developer.log('Özel boyutlu banner reklam zaten yükleniyor', name: 'AdManager');
-      return null;
-    }
+  // Start the scheduled ad timer
+  void _startScheduledAdTimer() {
+    // Cancel existing timer if any
+    _scheduledAdTimer?.cancel();
 
-    try {
-      _isLoading = true;
-      developer.log('Özel boyutlu banner reklam yükleniyor...', name: 'AdManager');
+    // Start countdown for scheduled ad
+    _adCountdownController.add(rewardedAdIntervalMinutes * 60);
 
-      final bannerAd = BannerAd(
-        adUnitId: _bannerAdUnitId,
-        size: adSize,
-        request: const AdRequest(),
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {
-            _isLoading = false;
-            developer.log('Özel boyutlu banner reklam başarıyla yüklendi', name: 'AdManager');
-          },
-          onAdFailedToLoad: (ad, error) {
-            ad.dispose();
-            _isLoading = false;
-            developer.log('Özel boyutlu banner reklam yüklenirken hata: $error', name: 'AdManager');
-          },
-        ),
-      );
+    // Create a timer to decrease the countdown
+    _scheduledAdTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_adCountdownController.isClosed) {
+        timer.cancel();
+        return;
+      }
 
-      await bannerAd.load();
-      return bannerAd;
-    } catch (e) {
-      developer.log('Özel boyutlu banner reklam yüklenirken beklenmeyen hata: $e', name: 'AdManager', error: e);
-      _isLoading = false;
-      return null;
+      final currentValue = _adCountdownController.value;
+      if (currentValue <= 0) {
+        // Time to show an ad
+        _adCountdownController.add(rewardedAdIntervalMinutes * 60);
+
+        // Check if we can show an ad (not recently shown)
+        final canShowAd = _lastRewardedAdShown == null ||
+            DateTime.now().difference(_lastRewardedAdShown!).inMinutes >= 1;
+
+        if (canShowAd && _isRewardedAdLoaded) {
+          // Add a small delay to avoid immediate ad display
+          Future.delayed(const Duration(seconds: 1), () {
+            showRewardedAd((reward) {
+              // Ad shown, no direct reward since this is a scheduled ad
+              developer.log('Scheduled ad shown', name: 'AdManager');
+            });
+          });
+        }
+      } else {
+        _adCountdownController.add(currentValue - 1);
+      }
+    });
+  }
+
+  // Track content interactions and show ad after certain number
+  void trackContentInteraction() {
+    _itemInteractionCount++;
+
+    if (_itemInteractionCount >= interactionCountBeforeAd) {
+      _itemInteractionCount = 0;
+
+      // Show interstitial ad after delay
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (_isInterstitialAdLoaded) {
+          showInterstitialAd();
+        }
+      });
     }
   }
 
-  Widget getBannerAdWithSize(AdSize adSize) {
-    return FutureBuilder<BannerAd?>(
-      future: loadBannerWithSize(adSize),
+  // Widget to display the ad countdown
+  Widget getAdCountdownWidget() {
+    return StreamBuilder<int>(
+      stream: adCountdown,
+      initialData: rewardedAdIntervalMinutes * 60,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            height: adSize.height.toDouble(),
-            color: Colors.grey[300],
-            child: const Center(
-              child: Text('Reklam yükleniyor...'),
-            ),
-          );
-        }
+        final seconds = snapshot.data ?? 0;
 
-        if (!snapshot.hasData || snapshot.data == null) {
-          return Container(
-            height: adSize.height.toDouble(),
-            color: Colors.grey[300],
-            child: const Center(
-              child: Text('Reklam yüklenemedi'),
-            ),
-          );
-        }
+        // Only show when less than 60 seconds remain
+        if (seconds > 60) return const SizedBox.shrink();
 
         return Container(
-          alignment: Alignment.center,
-          width: snapshot.data!.size.width.toDouble(),
-          height: snapshot.data!.size.height.toDouble(),
-          child: AdWidget(ad: snapshot.data!),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: AppColors.infoColor.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.av_timer, color: Colors.white, size: 16),
+              const SizedBox(width: 4),
+              Text(
+                'Ad in ${seconds}s',
+                style: AppTextStyles.caption.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -458,6 +505,9 @@ class AdManager {
     _isRewardedAdLoaded = false;
     _isInterstitialAdLoaded = false;
     _isBannerAdLoaded = false;
+
+    _scheduledAdTimer?.cancel();
+    _adCountdownController.close();
 
     developer.log('AdManager kaynakları temizlendi', name: 'AdManager');
   }

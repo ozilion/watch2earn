@@ -20,7 +20,8 @@ class RewardsScreen extends ConsumerStatefulWidget {
   ConsumerState<RewardsScreen> createState() => _RewardsScreenState();
 }
 
-class _RewardsScreenState extends ConsumerState<RewardsScreen> with SingleTickerProviderStateMixin {
+// Changed SingleTickerProviderStateMixin to TickerProviderStateMixin to support multiple tickers
+class _RewardsScreenState extends ConsumerState<RewardsScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoading = false;
   late AnimationController _animationController;

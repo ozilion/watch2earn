@@ -8,9 +8,16 @@ import 'package:watch2earn/features/auth/models/auth_state.dart';
 import 'package:watch2earn/features/auth/models/user.dart';
 import 'package:watch2earn/features/auth/repositories/auth_repository.dart';
 
+import '../services/credentials_storage.dart';
+
 // Provider for secure storage
 final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
   return const FlutterSecureStorage();
+});
+
+final credentialsStorageProvider = Provider<CredentialsStorage>((ref) {
+  final secureStorage = ref.watch(secureStorageProvider);
+  return CredentialsStorage(secureStorage: secureStorage);
 });
 
 // Provider for the AuthRepository
@@ -133,7 +140,7 @@ class AuthController extends AsyncNotifier<AuthState> {
     ref.read(authStateProvider.notifier).state = state.value;
   }
 
-  // Logout method
+// Logout method (updated)
   Future<void> logout() async {
     developer.log('Logout attempt', name: 'AuthController');
 
@@ -143,6 +150,13 @@ class AuthController extends AsyncNotifier<AuthState> {
     // Attempt logout
     final repository = ref.read(authRepositoryProvider);
     final result = await repository.logout();
+
+    // Clear saved credentials if "remember me" is disabled
+    final credentialsStorage = ref.read(credentialsStorageProvider);
+    final rememberMe = await credentialsStorage.getRememberMePreference();
+    if (!rememberMe) {
+      await credentialsStorage.clearCredentials();
+    }
 
     // Update state based on result
     state = await result.fold(
