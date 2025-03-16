@@ -1,0 +1,156 @@
+{
+  "app_name": "Watch2Earn",
+  
+  "general": {
+    "ok": "Aceptar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "error": "Error",
+    "success": "Éxito",
+    "loading": "Cargando...",
+    "retry": "Reintentar",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "see_all": "Ver todo",
+    "no_results": "No se encontraron resultados",
+    "no_internet": "Sin conexión a internet"
+  },
+  
+  "auth": {
+    "welcome": "Bienvenido a Watch2Earn",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm_password": "Confirmar contraseña",
+    "name": "Nombre",
+    "already_have_account": "¿Ya tienes una cuenta?",
+    "dont_have_account": "¿No tienes una cuenta?",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "remember_me": "Recordarme",
+    "login_success": "Inicio de sesión exitoso",
+    "register_success": "Registro completado con éxito",
+    "logout_success": "Sesión cerrada correctamente",
+    "login_error": "Inicio de sesión fallido",
+    "register_error": "Registro fallido",
+    "invalid_email": "Introduce un correo electrónico válido",
+    "password_short": "La contraseña debe tener al menos 6 caracteres",
+    "passwords_dont_match": "Las contraseñas no coinciden"
+  },
+  
+  "home": {
+    "title": "Inicio",
+    "trending_movies": "Películas de tendencia",
+    "popular_movies": "Películas populares",
+    "upcoming_movies": "Próximos estrenos",
+    "trending_tv": "Series de TV de tendencia",
+    "popular_tv": "Series de TV populares"
+  },
+  
+  "movie": {
+    "rating": "Calificación",
+    "runtime": "Duración",
+    "release_date": "Fecha de estreno",
+    "overview": "Sinopsis",
+    "cast": "Reparto",
+    "similar": "Películas similares",
+    "videos": "Videos",
+    "trailer": "Tráiler",
+    "add_to_favorites": "Añadir a favoritos",
+    "remove_from_favorites": "Eliminar de favoritos",
+    "add_to_watchlist": "Añadir a la lista",
+    "remove_from_watchlist": "Eliminar de la lista",
+    "director": "Director",
+    "genres": "Géneros",
+    "budget": "Presupuesto",
+    "revenue": "Ingresos",
+    "more_videos": "Más videos",
+    "minutes": "Minutos",
+    "watch": "Ver",
+    "favorite_short": "Añadir a favoritos"
+  },
+  
+  "tv_show": {
+    "seasons": "Temporadas",
+    "episodes": "Episodios",
+    "first_air_date": "Primera emisión",
+    "last_air_date": "Última emisión",
+    "similar": "Series similares",
+    "season": "Temporada",
+    "episode": "Episodio"
+  },
+  
+  "search": {
+    "title": "Buscar",
+    "hint": "Busca películas o series de TV",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "no_results": "No se encontraron resultados. Prueba con otras palabras clave.",
+    "categories": "Categorías",
+    "movies": "Películas",
+    "tv_shows": "Series de TV",
+    "recent_searches": "Búsquedas recientes",
+    "clear_history": "Borrar historial"
+  },
+  
+  "favorites": {
+    "title": "Favoritos",
+    "empty": "Aún no has añadido favoritos",
+    "add_some": "Descubre y añade tus películas y series favoritas",
+    "removed": "Eliminado de favoritos"
+  },
+  
+  "watchlist": {
+    "title": "Lista de seguimiento",
+    "empty": "Tu lista de seguimiento está vacía",
+    "add_some": "Añade películas o series de TV para ver más tarde",
+    "removed": "Eliminado de la lista de seguimiento"
+  },
+  
+  "profile": {
+    "title": "Perfil",
+    "edit_profile": "Editar perfil",
+    "settings": "Configuración",
+    "token_history": "Historial de tokens",
+    "earn_tokens": "Ganar tokens",
+    "help": "Ayuda y soporte",
+    "about": "Acerca de"
+  },
+  
+  "settings": {
+    "title": "Configuración",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "language": "Idioma",
+    "notifications": "Notificaciones",
+    "data_usage": "Uso de datos",
+    "privacy": "Privacidad",
+    "terms": "Términos de servicio",
+    "version": "Versión"
+  },
+  
+  "tokens": {
+    "balance": "Saldo de tokens",
+    "earn": "Ganar tokens",
+    "history": "Historial de tokens",
+    "watch_ads": "Mira anuncios para ganar tokens",
+    "watch_ad": "Ver anuncio",
+    "rewarded": "¡Has ganado {count} tokens!",
+    "token_history_empty": "No hay transacciones de tokens",
+    "earned": "Ganados",
+    "spent": "Gastados",
+    "date": "Fecha"
+  },
+  
+  "errors": {
+    "general": "Algo salió mal. Inténtalo de nuevo.",
+    "network": "Error de red. Comprueba tu conexión.",
+    "timeout": "Tiempo de espera agotado. Inténtalo de nuevo.",
+    "server": "Error del servidor. Inténtalo más tarde.",
+    "not_found": "No se encontró el recurso solicitado.",
+    "auth": "Autenticación fallida. Inicia sesión de nuevo."
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "app_name": "Watch2Earn",
+  
+  "general": {
+    "ok": "OK",
+    "cancel": "Annulla",
+    "confirm": "Conferma",
+    "error": "Errore",
+    "success": "Successo",
+    "loading": "Caricamento...",
+    "retry": "Riprova",
+    "submit": "Invia",
+    "search": "Cerca",
+    "see_all": "Vedi tutto",
+    "no_results": "Nessun risultato trovato",
+    "no_internet": "Nessuna connessione internet"
+  },
+  
+  "auth": {
+    "welcome": "Benvenuto su Watch2Earn",
+    "login": "Accedi",
+    "register": "Registrati",
+    "logout": "Esci",
+    "email": "E-mail",
+    "password": "Password",
+    "confirm_password": "Conferma password",
+    "name": "Nome",
+    "already_have_account": "Hai già un account?",
+    "dont_have_account": "Non hai un account?",
+    "forgot_password": "Password dimenticata?",
+    "remember_me": "Ricordami",
+    "login_success": "Accesso effettuato con successo",
+    "register_success": "Registrazione completata con successo",
+    "logout_success": "Disconnessione avvenuta con successo",
+    "login_error": "Accesso non riuscito",
+    "register_error": "Registrazione non riuscita",
+    "invalid_email": "Inserisci un indirizzo email valido",
+    "password_short": "La password deve essere lunga almeno 6 caratteri",
+    "passwords_dont_match": "Le password non corrispondono"
+  },
+  
+  "home": {
+    "title": "Home",
+    "trending_movies": "Film di tendenza",
+    "popular_movies": "Film popolari",
+    "upcoming_movies": "Film in arrivo",
+    "trending_tv": "Serie TV di tendenza",
+    "popular_tv": "Serie TV popolari"
+  },
+  
+  "movie": {
+    "rating": "Valutazione",
+    "runtime": "Durata",
+    "release_date": "Data di uscita",
+    "overview": "Panoramica",
+    "cast": "Cast",
+    "similar": "Film simili",
+    "videos": "Video",
+    "trailer": "Trailer",
+    "add_to_favorites": "Aggiungi ai preferiti",
+    "remove_from_favorites": "Rimuovi dai preferiti",
+    "add_to_watchlist": "Aggiungi alla watchlist",
+    "remove_from_watchlist": "Rimuovi dalla watchlist",
+    "director": "Regista",
+    "genres": "Generi",
+    "budget": "Budget",
+    "revenue": "Incassi",
+    "more_videos": "Altri video",
+    "minutes": "Minuti",
+    "watch": "Guarda",
+    "favorite_short": "Aggiungi ai preferiti"
+  },
+  
+  "tv_show": {
+    "seasons": "Stagioni",
+    "episodes": "Episodi",
+    "first_air_date": "Prima messa in onda",
+    "last_air_date": "Ultima messa in onda",
+    "similar": "Serie simili",
+    "season": "Stagione",
+    "episode": "Episodio"
+  },
+  
+  "search": {
+    "title": "Cerca",
+    "hint": "Cerca film o serie TV",
+    "filter": "Filtra",
+    "sort": "Ordina",
+    "no_results": "Nessun risultato trovato. Prova parole chiave diverse.",
+    "categories": "Categorie",
+    "movies": "Film",
+    "tv_shows": "Serie TV",
+    "recent_searches": "Ricerche recenti",
+    "clear_history": "Cancella cronologia"
+  },
+  
+  "favorites": {
+    "title": "Preferiti",
+    "empty": "Non hai ancora aggiunto preferiti",
+    "add_some": "Scopri e aggiungi i tuoi film e serie TV preferiti",
+    "removed": "Rimosso dai preferiti"
+  },
+  
+  "watchlist": {
+    "title": "Watchlist",
+    "empty": "La tua watchlist è vuota",
+    "add_some": "Aggiungi film o serie TV che vuoi guardare in seguito",
+    "removed": "Rimosso dalla watchlist"
+  },
+  
+  "profile": {
+    "title": "Profilo",
+    "edit_profile": "Modifica profilo",
+    "settings": "Impostazioni",
+    "token_history": "Storico token",
+    "earn_tokens": "Guadagna token",
+    "help": "Aiuto e supporto",
+    "about": "Informazioni"
+  },
+  
+  "settings": {
+    "title": "Impostazioni",
+    "theme": "Tema",
+    "light": "Chiaro",
+    "dark": "Scuro",
+    "system": "Sistema",
+    "language": "Lingua",
+    "notifications": "Notifiche",
+    "data_usage": "Utilizzo dati",
+    "privacy": "Privacy",
+    "terms": "Termini di servizio",
+    "version": "Versione"
+  },
+  
+  "tokens": {
+    "balance": "Saldo token",
+    "earn": "Guadagna token",
+    "history": "Storico token",
+    "watch_ads": "Guarda gli annunci per guadagnare token",
+    "watch_ad": "Guarda annuncio",
+    "rewarded": "Hai guadagnato {count} token!",
+    "token_history_empty": "Nessuna transazione di token",
+    "earned": "Guadagnati",
+    "spent": "Spesi",
+    "date": "Data"
+  },
+  
+  "errors": {
+    "general": "Qualcosa è andato storto. Riprova.",
+    "network": "Errore di rete. Controlla la tua connessione.",
+    "timeout": "Timeout della richiesta. Riprova.",
+    "server": "Errore del server. Riprova più tardi.",
+    "not_found": "La risorsa richiesta non è stata trovata.",
+    "auth": "Autenticazione non riuscita. Accedi di nuovo."
+  }
+}

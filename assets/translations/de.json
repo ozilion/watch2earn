@@ -1,0 +1,156 @@
+{
+  "app_name": "Watch2Earn",
+
+  "general": {
+    "ok": "OK",
+    "cancel": "Abbrechen",
+    "confirm": "Bestätigen",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "loading": "Lädt...",
+    "retry": "Erneut versuchen",
+    "submit": "Absenden",
+    "search": "Suchen",
+    "see_all": "Alle anzeigen",
+    "no_results": "Keine Ergebnisse gefunden",
+    "no_internet": "Keine Internetverbindung"
+  },
+
+  "auth": {
+    "welcome": "Willkommen bei Watch2Earn",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirm_password": "Passwort bestätigen",
+    "name": "Name",
+    "already_have_account": "Haben Sie bereits ein Konto?",
+    "dont_have_account": "Noch kein Konto?",
+    "forgot_password": "Passwort vergessen?",
+    "remember_me": "Angemeldet bleiben",
+    "login_success": "Erfolgreich angemeldet",
+    "register_success": "Erfolgreich registriert",
+    "logout_success": "Erfolgreich abgemeldet",
+    "login_error": "Anmeldung fehlgeschlagen",
+    "register_error": "Registrierung fehlgeschlagen",
+    "invalid_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+    "password_short": "Passwort muss mindestens 6 Zeichen lang sein",
+    "passwords_dont_match": "Passwörter stimmen nicht überein"
+  },
+
+  "home": {
+    "title": "Startseite",
+    "trending_movies": "Trendfilme",
+    "popular_movies": "Beliebte Filme",
+    "upcoming_movies": "Kommende Filme",
+    "trending_tv": "Trend TV-Serien",
+    "popular_tv": "Beliebte TV-Serien"
+  },
+
+  "movie": {
+    "rating": "Bewertung",
+    "runtime": "Laufzeit",
+    "release_date": "Veröffentlichungsdatum",
+    "overview": "Überblick",
+    "cast": "Besetzung",
+    "similar": "Ähnliche Filme",
+    "videos": "Videos",
+    "trailer": "Trailer",
+    "add_to_favorites": "Zu Favoriten hinzufügen",
+    "remove_from_favorites": "Aus Favoriten entfernen",
+    "add_to_watchlist": "Zur Watchlist hinzufügen",
+    "remove_from_watchlist": "Von Watchlist entfernen",
+    "director": "Regisseur",
+    "genres": "Genres",
+    "budget": "Budget",
+    "revenue": "Einnahmen",
+    "more_videos": "Mehr Videos",
+    "minutes": "Minuten",
+    "watch": "Ansehen",
+    "favorite_short": "Zu Favoriten"
+  },
+
+  "tv_show": {
+    "seasons": "Staffeln",
+    "episodes": "Episoden",
+    "first_air_date": "Erste Ausstrahlung",
+    "last_air_date": "Letzte Ausstrahlung",
+    "similar": "Ähnliche Serien",
+    "season": "Staffel",
+    "episode": "Episode"
+  },
+
+  "search": {
+    "title": "Suche",
+    "hint": "Suche nach Filmen oder TV-Serien",
+    "filter": "Filter",
+    "sort": "Sortieren",
+    "no_results": "Keine Ergebnisse gefunden. Versuchen Sie andere Suchbegriffe.",
+    "categories": "Kategorien",
+    "movies": "Filme",
+    "tv_shows": "TV-Serien",
+    "recent_searches": "Letzte Suchen",
+    "clear_history": "Verlauf löschen"
+  },
+
+  "favorites": {
+    "title": "Favoriten",
+    "empty": "Sie haben noch keine Favoriten hinzugefügt",
+    "add_some": "Entdecken und speichern Sie Ihre Lieblingsfilme und -serien",
+    "removed": "Aus Favoriten entfernt"
+  },
+
+  "watchlist": {
+    "title": "Watchlist",
+    "empty": "Ihre Watchlist ist leer",
+    "add_some": "Fügen Sie Filme oder TV-Serien hinzu, die Sie später ansehen möchten",
+    "removed": "Von Watchlist entfernt"
+  },
+
+  "profile": {
+    "title": "Profil",
+    "edit_profile": "Profil bearbeiten",
+    "settings": "Einstellungen",
+    "token_history": "Token-Verlauf",
+    "earn_tokens": "Tokens verdienen",
+    "help": "Hilfe & Support",
+    "about": "Über"
+  },
+
+  "settings": {
+    "title": "Einstellungen",
+    "theme": "Thema",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "language": "Sprache",
+    "notifications": "Benachrichtigungen",
+    "data_usage": "Datennutzung",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "version": "Version"
+  },
+
+  "tokens": {
+    "balance": "Token-Guthaben",
+    "earn": "Tokens verdienen",
+    "history": "Token-Verlauf",
+    "watch_ads": "Schauen Sie Werbung, um Tokens zu verdienen",
+    "watch_ad": "Werbung ansehen",
+    "rewarded": "Sie haben {count} Tokens verdient!",
+    "token_history_empty": "Noch keine Token-Transaktionen",
+    "earned": "Verdient",
+    "spent": "Ausgegeben",
+    "date": "Datum"
+  },
+
+  "errors": {
+    "general": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+    "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung.",
+    "timeout": "Zeitüberschreitung. Bitte versuchen Sie es erneut.",
+    "server": "Serverfehler. Bitte versuchen Sie es später wieder.",
+    "not_found": "Die angeforderte Ressource wurde nicht gefunden.",
+    "auth": "Authentifizierung fehlgeschlagen. Bitte melden Sie sich erneut an."
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "app_name": "Watch2Earn",
+
+  "general": {
+    "ok": "Tamam",
+    "cancel": "İptal",
+    "confirm": "Onayla",
+    "error": "Hata",
+    "success": "Başarılı",
+    "loading": "Yükleniyor...",
+    "retry": "Tekrar Dene",
+    "submit": "Gönder",
+    "search": "Ara",
+    "see_all": "Tümünü Gör",
+    "no_results": "Sonuç bulunamadı",
+    "no_internet": "İnternet bağlantısı yok"
+  },
+
+  "auth": {
+    "welcome": "Watch2Earn'e Hoş Geldiniz",
+    "login": "Giriş Yap",
+    "register": "Kayıt Ol",
+    "logout": "Çıkış Yap",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirm_password": "Şifreyi Onayla",
+    "name": "Ad Soyad",
+    "already_have_account": "Zaten bir hesabınız var mı?",
+    "dont_have_account": "Hesabınız yok mu?",
+    "forgot_password": "Şifremi Unuttum?",
+    "remember_me": "Beni Hatırla",
+    "login_success": "Başarıyla giriş yapıldı",
+    "register_success": "Başarıyla kayıt olundu",
+    "logout_success": "Başarıyla çıkış yapıldı",
+    "login_error": "Giriş başarısız",
+    "register_error": "Kayıt başarısız",
+    "invalid_email": "Lütfen geçerli bir e-posta adresi girin",
+    "password_short": "Şifre en az 6 karakter olmalı",
+    "passwords_dont_match": "Şifreler eşleşmiyor"
+  },
+
+  "home": {
+    "title": "Ana Sayfa",
+    "trending_movies": "Trend Filmler",
+    "popular_movies": "Popüler Filmler",
+    "upcoming_movies": "Yaklaşan Filmler",
+    "trending_tv": "Trend TV Dizileri",
+    "popular_tv": "Popüler TV Dizileri"
+  },
+
+  "movie": {
+    "rating": "Puan",
+    "runtime": "Süre",
+    "release_date": "Yayın Tarihi",
+    "overview": "Genel Bakış",
+    "cast": "Oyuncular",
+    "similar": "Benzer Filmler",
+    "videos": "Videolar",
+    "trailer": "Fragman",
+    "add_to_favorites": "Favorilere Ekle",
+    "remove_from_favorites": "Favorilerden Çıkar",
+    "add_to_watchlist": "İzleme Listesine Ekle",
+    "remove_from_watchlist": "İzleme Listesinden Çıkar",
+    "director": "Yönetmen",
+    "genres": "Türler",
+    "budget": "Bütçe",
+    "revenue": "Gelir",
+    "more_videos": "Daha Fazla Video",
+    "minutes": "Dakika",
+    "watch": "İzle",
+    "favorite_short": "Favorilere Ekle"
+  },
+
+  "tv_show": {
+    "seasons": "Sezonlar",
+    "episodes": "Bölümler",
+    "first_air_date": "İlk Yayın Tarihi",
+    "last_air_date": "Son Yayın Tarihi",
+    "similar": "Benzer Diziler",
+    "season": "Sezon",
+    "episode": "Bölüm"
+  },
+
+  "search": {
+    "title": "Arama",
+    "hint": "Film veya TV dizisi ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "no_results": "Sonuç bulunamadı. Farklı anahtar kelimeler deneyin.",
+    "categories": "Kategoriler",
+    "movies": "Filmler",
+    "tv_shows": "TV Dizileri",
+    "recent_searches": "Son Aramalar",
+    "clear_history": "Geçmişi Temizle"
+  },
+
+  "favorites": {
+    "title": "Favoriler",
+    "empty": "Henüz favori eklemediniz",
+    "add_some": "Beğendiğiniz film ve dizileri keşfedin",
+    "removed": "Favorilerden çıkarıldı"
+  },
+
+  "watchlist": {
+    "title": "İzleme Listesi",
+    "empty": "İzleme listeniz boş",
+    "add_some": "Daha sonra izlemek istediğiniz film ve dizileri ekleyin",
+    "removed": "İzleme listesinden çıkarıldı"
+  },
+
+  "profile": {
+    "title": "Profil",
+    "edit_profile": "Profili Düzenle",
+    "settings": "Ayarlar",
+    "token_history": "Token Geçmişi",
+    "earn_tokens": "Token Kazan",
+    "help": "Yardım ve Destek",
+    "about": "Hakkında"
+  },
+
+  "settings": {
+    "title": "Ayarlar",
+    "theme": "Tema",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem",
+    "language": "Dil",
+    "notifications": "Bildirimler",
+    "data_usage": "Veri Kullanımı",
+    "privacy": "Gizlilik",
+    "terms": "Kullanım Koşulları",
+    "version": "Versiyon"
+  },
+
+  "tokens": {
+    "balance": "Token Bakiyesi",
+    "earn": "Token Kazan",
+    "history": "Token Geçmişi",
+    "watch_ads": "Token kazanmak için reklamları izleyin",
+    "watch_ad": "Reklam İzle",
+    "rewarded": "{count} token kazandınız!",
+    "token_history_empty": "Henüz token işlemi yok",
+    "earned": "Kazanılan",
+    "spent": "Harcanan",
+    "date": "Tarih"
+  },
+
+  "errors": {
+    "general": "Bir şeyler yanlış gitti. Lütfen tekrar deneyin.",
+    "network": "Ağ hatası. Lütfen bağlantınızı kontrol edin.",
+    "timeout": "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",
+    "server": "Sunucu hatası. Lütfen daha sonra tekrar deneyin.",
+    "not_found": "İstenen kaynak bulunamadı.",
+    "auth": "Kimlik doğrulama başarısız. Lütfen tekrar giriş yapın."
+  }
+}
