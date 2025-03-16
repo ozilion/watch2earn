@@ -1,4 +1,4 @@
-// lib/features/rewards/controllers/rewards_controller.dart
+// lib/features/rewards/providers/rewards_provider.dart
 import 'dart:developer' as developer;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -54,16 +54,16 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
   }
 
   Future<void> _init() async {
-    developer.log('RewardsController başlatılıyor', name: 'RewardsController');
+    developer.log('Initializing RewardsController', name: 'RewardsController');
 
-    // Başlangıç durumu
+    // Initial state
     state = AsyncValue.data(RewardsState.initial());
 
     try {
-      // İlk reklam yüklemesi
+      // Load initial ad
       await _adManager.loadRewardedAd();
 
-      // Reklam durumunu güncelle
+      // Update ad availability state
       final isAdAvailable = _adManager.isRewardedAdLoaded;
 
       state = AsyncValue.data(state.valueOrNull?.copyWith(
@@ -73,21 +73,20 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
             isAdAvailable: isAdAvailable,
           ));
 
-      developer.log(
-          'RewardsController başlatma tamamlandı, reklam durumu: $isAdAvailable',
+      developer.log('RewardsController initialized, ad status: $isAdAvailable',
           name: 'RewardsController');
     } catch (e) {
-      developer.log('RewardsController başlatma hatası: $e',
+      developer.log('Error initializing RewardsController: $e',
           name: 'RewardsController', error: e);
-      // Hataya rağmen devam et, uygulamanın çalışmasını engellemeyecek
+      // Continue despite error, allowing the app to function with reduced features
     }
   }
 
   Future<void> loadRewardHistory(String userId) async {
-    developer.log('$userId kullanıcısı için ödül geçmişi yükleniyor',
+    developer.log('Loading reward history for user: $userId',
         name: 'RewardsController');
 
-    // Geçmişi koruyarak yükleme durumunu ayarla
+    // Preserve current state while loading
     final currentHistory = state.valueOrNull?.history ?? [];
     final isAdAvailable = state.valueOrNull?.isAdAvailable ?? false;
 
@@ -105,9 +104,8 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
 
       result.fold(
             (failure) {
-          developer.log('Ödül geçmişi yüklenemedi: ${failure.message}',
+          developer.log('Failed to load reward history: ${failure.message}',
               name: 'RewardsController');
-          // Geçmiş yükleme hataları için hata durumu ayarlamıyoruz - sadece mevcut geçmişi koruyoruz
           state = AsyncValue.data(state.valueOrNull?.copyWith(
             isLoading: false,
             error: failure.message,
@@ -120,8 +118,7 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
               ));
         },
             (history) {
-          developer.log(
-              '${history.length} ödül geçmişi öğesi başarıyla yüklendi',
+          developer.log('Successfully loaded ${history.length} reward history items',
               name: 'RewardsController');
           state = AsyncValue.data(state.valueOrNull?.copyWith(
             history: history,
@@ -136,9 +133,8 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
         },
       );
     } catch (e) {
-      developer.log('loadRewardHistory içinde istisna: $e',
+      developer.log('Exception in loadRewardHistory: $e',
           name: 'RewardsController', error: e);
-      // Geçmiş yükleme hataları için hata durumu ayarlamıyoruz - sadece mevcut geçmişi koruyoruz
       state = AsyncValue.data(state.valueOrNull?.copyWith(
         isLoading: false,
         error: e.toString(),
@@ -151,20 +147,19 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
           ));
     }
 
-    // Reklam durumunu kontrol et ve güncelle
-    _checkAdStatus();
+    // Check ad status and update
+    _updateAdAvailability();
   }
 
   Future<void> watchRewardedAd(String userId) async {
-    developer.log('$userId kullanıcısı için ödüllü reklam akışı başlatılıyor',
-        name: 'RewardsController');
+    developer.log('Starting rewarded ad flow for user: $userId', name: 'RewardsController');
 
-    // Geçmişi koruyarak yükleme durumunu ayarla
+    // Keep current history but update loading and ad state
     final currentHistory = state.valueOrNull?.history ?? [];
 
     state = AsyncValue.data(state.valueOrNull?.copyWith(
       isLoading: true,
-      isAdAvailable: false, // Reklam gösterimi sırasında kullanılamaz
+      isAdAvailable: false, // Ad is not available while showing
       clearError: true,
     ) ??
         RewardsState.initial().copyWith(
@@ -174,20 +169,19 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
         ));
 
     try {
-      // Reklam göster ve ödülü işle
+      // Show ad and process reward
       await _adManager.showRewardedAd((rewardAmount) async {
-        developer.log('Reklam tamamlandı, $rewardAmount token ödülü ekleniyor',
+        developer.log('Ad completed, adding $rewardAmount token reward',
             name: 'RewardsController');
 
         try {
-          // Kullanıcı bakiyesine ödül ekle
+          // Add reward to user balance
           final result = await _rewardsService.addReward(userId, rewardAmount);
 
           result.fold(
                 (failure) {
-              developer.log('Ödül eklenemedi: ${failure.message}',
+              developer.log('Failed to add reward: ${failure.message}',
                   name: 'RewardsController');
-              // Hatayı göster ama çökmeyi engelle
               state = AsyncValue.data(state.valueOrNull?.copyWith(
                 isLoading: false,
                 error: failure.message,
@@ -199,23 +193,21 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
                   ));
             },
                 (newUser) async {
-              developer.log(
-                  'Ödül başarıyla eklendi, yeni bakiye: ${newUser.tokenBalance}',
+              developer.log('Reward added successfully, new balance: ${newUser.tokenBalance}',
                   name: 'RewardsController');
 
-              // Auth kontrolcüsünde kullanıcı verilerini güncelle
+              // Update user data in auth controller
               await _authController.updateUserData(newUser);
-              developer.log('Auth kontrolcüsünde kullanıcı verileri güncellendi',
+              developer.log('User data updated in auth controller',
                   name: 'RewardsController');
 
-              // Ödül geçmişini yenile
+              // Refresh reward history
               loadRewardHistory(userId);
             },
           );
         } catch (e) {
-          developer.log('Ödülü işlerken istisna: $e',
+          developer.log('Error processing reward: $e',
               name: 'RewardsController', error: e);
-          // Hatayı göster ama çökmeyi engelle
           state = AsyncValue.data(state.valueOrNull?.copyWith(
             isLoading: false,
             error: e.toString(),
@@ -228,9 +220,8 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
         }
       });
     } catch (e) {
-      developer.log('watchRewardedAd içinde istisna: $e',
+      developer.log('Error in watchRewardedAd: $e',
           name: 'RewardsController', error: e);
-      // Hatayı göster
       state = AsyncValue.data(state.valueOrNull?.copyWith(
         isLoading: false,
         error: e.toString(),
@@ -241,7 +232,7 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
             error: e.toString(),
           ));
     } finally {
-      // Her durumda yükleme durumunu sıfırla
+      // Reset loading state regardless of outcome
       if (mounted) {
         state = AsyncValue.data(state.valueOrNull?.copyWith(
           isLoading: false,
@@ -252,16 +243,16 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
             ));
       }
 
-      // Reklam durumunu kontrol et ve güncelle
-      _checkAdStatus();
+      // Check ad availability and update state
+      _updateAdAvailability();
     }
   }
 
-  // Reklam durumunu kontrol et ve güncelle
-  void _checkAdStatus() {
+  // Update ad availability in state
+  void _updateAdAvailability() {
     final isAdAvailable = _adManager.isRewardedAdLoaded;
 
-    // Eğer durum değiştiyse güncelle
+    // Update state if availability changed
     if (state.valueOrNull?.isAdAvailable != isAdAvailable) {
       state = AsyncValue.data(state.valueOrNull?.copyWith(
         isAdAvailable: isAdAvailable,
@@ -270,11 +261,11 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
             isAdAvailable: isAdAvailable,
           ));
 
-      developer.log('Reklam durumu güncellendi: $isAdAvailable',
+      developer.log('Ad availability updated: $isAdAvailable',
           name: 'RewardsController');
     }
 
-    // Eğer reklam yüklü değilse, yüklemeyi dene
+    // If ad not available, try to load
     if (!isAdAvailable) {
       _adManager.loadRewardedAd();
     }
@@ -285,7 +276,7 @@ class RewardsController extends StateNotifier<AsyncValue<RewardsState>> {
     try {
       _adManager.dispose();
     } catch (e) {
-      developer.log('AdManager temizlenirken hata: $e',
+      developer.log('Error disposing AdManager: $e',
           name: 'RewardsController', error: e);
     }
     super.dispose();
